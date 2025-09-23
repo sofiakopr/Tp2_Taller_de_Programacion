@@ -5,6 +5,7 @@
 #include "funciones.h"
 
 int main() {
+  setbuf(stdout, NULL);
   // Genero y muestro los primeros 100 números primos
   int *p = primos(100);
   for(int i = 0; i < 100; i++){
@@ -13,18 +14,20 @@ int main() {
 
   // Uso los números primos
 
+  int indicadorPrimos = 0;
   Bloque* blockchain = crear_blockchain();
-
-  for(int i = 0; i < 3; i++){
-    Nodo* nodo = agregar_nodo(blockchain, p[i]);
-    printf("\n%d", *(nodo->id)); //aa chequear si nodo sig es posta nodo sig
-    p[i] = 0;
-  }
+  blockchain = agregar_nodo(blockchain, p[0]);
+  blockchain = agregar_nodo(blockchain, p[1]);
+  blockchain = agregar_nodo(blockchain, p[2]);
   
-
+  for(Nodo *nodo = blockchain->primero; nodo; nodo = nodo->sig){
+    printf("\n%d\n", *(nodo->id)); 
+    printf("%c\n", nodo->msj);
+  }
 
 
   // IMPORTANTE: libero la memoria pedida para el arreglo de números primos
   free(p);
+  free(blockchain);
   return 0;
 }
