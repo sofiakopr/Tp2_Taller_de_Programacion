@@ -17,17 +17,17 @@ typedef struct Bloque_{
 
 Bloque* crear_blockchain(); //inicializo una blockchain
 
-Nodo* agregar_nodo(Bloque* blockchain, int primo); //agrego un nodo a una blockchain
+Bloque* agregar_nodo(Bloque* blockchain, int primo); //agrego un nodo a una blockchain
 
-Nodo* crear_arbol(Nodo* nodo); //crear arbol de blockchain
+Bloque* crear_arbol(Bloque* blockchain); //crear arbol de blockchain //ver si es doble puntero x lista de blockchains
 
-Nodo* alta(Nodo* blockchain, Nodo* nodo, int primo); //AGREGAR un nodo
+Bloque* alta(Bloque* blockchain, Nodo* nodo, int primo); //AGREGAR un nodo
 
-Nodo* actualizacionNodo(Nodo* blockchain, char msj); //actualizar el contenido de un nodo y cambiar su id
+Bloque* actualizacionNodo(Bloque* blockchain, char msj); //actualizar el contenido de un nodo y cambiar su id
 
-Nodo* validacion(Nodo* blockchain); //validar formato de blockchain
+Bloque* validacion(Bloque* blockchain); //validar formato de blockchain
 
-Nodo* validacionConjunto(Nodo* blockchain, int nroValidacion); //LA PRIMER BLOCKCHAIN DEL MUNDO!!!
+Bloque* validacionConjunto(Bloque* blockchain, int nroValidacion); //LA PRIMER BLOCKCHAIN DEL MUNDO!!!
 
 #endif
 
