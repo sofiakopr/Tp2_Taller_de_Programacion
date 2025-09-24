@@ -19,7 +19,7 @@ Bloque* crear_blockchain(); //inicializo una blockchain
 
 Bloque* agregar_nodo(Bloque* blockchain, int primo); //agrego un nodo a una blockchain
 
-Bloque* crear_arbol(Bloque* blockchain); //crear arbol de blockchain //ver si es doble puntero x lista de blockchains
+int* crear_arbol(int* Arrblockchain, int indicador); //crear arbol de blockchain //ver si es doble puntero x lista de blockchains
 
 Bloque* alta(Bloque* blockchain, Nodo* nodo, int primo); //AGREGAR un nodo
 
