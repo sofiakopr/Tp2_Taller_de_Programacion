@@ -5,29 +5,30 @@
 
 typedef struct Nodo_{
     char msj;
-    int* id;
+    int id;
     struct Nodo_* ant;
     struct Nodo_* sig;
 }Nodo;
 
 typedef struct Bloque_{
-    Nodo* primero;
-    Nodo* ultimo;
-}Bloque;
+    Nodo* prim;
+    Nodo* ult;
+    int cant_nodos;
+}DE_Nodo;
 
-Bloque* crear_blockchain(); //inicializo una blockchain
+//Nodo crear_blockchain(); //inicializo una blockchain (jaja no más...)
 
-Bloque* agregar_nodo(Bloque* blockchain, int primo); //agrego un nodo a una blockchain
+DE_Nodo agregar_nodo(DE_Nodo lista, int primo); //agrego un nodo a una blockchain
 
 int* crear_arbol(int* Arrblockchain, int indicador); //crear arbol de blockchain //ver si es doble puntero x lista de blockchains
 
-Bloque* alta(Bloque* blockchain, Nodo* nodo, int primo); //AGREGAR un nodo
+int* alta(int* bc_federada, int nro_de_bc ,DE_Nodo list_nodo[], int primo); //AGREGAR un nodo
 
-Bloque* actualizacionNodo(Bloque* blockchain, char msj); //actualizar el contenido de un nodo y cambiar su id
+DE_Nodo* actualizacionNodo(DE_Nodo* blockchain, char msj); //actualizar el contenido de un nodo y cambiar su id
 
-Bloque* validacion(Bloque* blockchain); //validar formato de blockchain
+int validacion(int* bc_federada, int nro, DE_Nodo nodo[], int* arbol); //validar formato de blockchain
 
-Bloque* validacionConjunto(Bloque* blockchain, int nroValidacion); //LA PRIMER BLOCKCHAIN DEL MUNDO!!!
+DE_Nodo* validacionConjunto(DE_Nodo* blockchain, int nroValidacion); //LA PRIMER BLOCKCHAIN DEL MUNDO!!!
 
 #endif
 

@@ -3,6 +3,7 @@
 #include <math.h>
 #include "generador_primos.h"
 #include "funciones.h"
+#include <string.h>
 
 int main() {
   setbuf(stdout, NULL);
@@ -12,43 +13,70 @@ int main() {
    // printf("%d ",p[i]);
   }
 
-  int indicador = 0;
-  int* Arrblockchain = malloc((sizeof(int)) * 3); 
-  Bloque* blockchain = crear_blockchain();
-  blockchain = agregar_nodo(blockchain, p[0]);
-  blockchain = agregar_nodo(blockchain, p[1]);
-  blockchain = agregar_nodo(blockchain, p[2]);
-  Arrblockchain[indicador] = *(blockchain->ultimo->id);
-  indicador+=1;
+  int cant_bc;
+
+  printf("\ncantidad de bc: ");
+  scanf("%i", &cant_bc);
   
-  Bloque* blockchain2 = crear_blockchain();
-  blockchain2 = agregar_nodo(blockchain2, p[3]);
-  blockchain2 = agregar_nodo(blockchain2, p[4]);
-  blockchain2 = agregar_nodo(blockchain2, p[5]);
-  Arrblockchain[indicador] = *(blockchain2->ultimo->id);
-  indicador+=1;
-
-  Bloque* blockchain3 = crear_blockchain();
-  blockchain3 = agregar_nodo(blockchain3, p[6]);
-  blockchain3 = agregar_nodo(blockchain3, p[7]);
-  blockchain3 = agregar_nodo(blockchain3, p[8]);
-  Arrblockchain[indicador] = *(blockchain3->ultimo->id);
-  indicador+=1;
-
-  int* arbol = crear_arbol(Arrblockchain, indicador);
-
-  for(Nodo *nodo = blockchain->primero; nodo; nodo = nodo->sig){
-    printf("\n%d\n", *(nodo->id)); 
-    printf("%c\n", nodo->msj);
+  DE_Nodo list_nodo[cant_bc];
+  
+  for(int i = 0; i < cant_bc; i ++){
+    list_nodo[i].prim = NULL;
+    list_nodo[i].ult = NULL;
   }
 
-  for(int i = 0; i <= indicador*2; i++){
-    //printf("%d\n", Arrblockchain[i]);
-    printf("%d\n", arbol[i]);
+  int indicePrimo = 0;
+  int* bc_federada = malloc((sizeof(int)) * cant_bc); 
+  
+  for(int i = 0; i < cant_bc; i ++){
+    printf("\nBlockchain nro %i", i+1);
+
+    int cant_nodos; 
+    printf("\n¿Cuántos nodos tiene esta blockchain?: ");
+    scanf("%i", &cant_nodos);
+
+    for(int j = 0; j < cant_nodos; j ++){
+      list_nodo[i] = agregar_nodo(list_nodo[i], p[indicePrimo]);
+      list_nodo[i].cant_nodos = cant_nodos;
+      indicePrimo += 1;
+    }
+
+    bc_federada[i] = (list_nodo[i].ult)->id;
   }
 
+  int* arbol = crear_arbol(bc_federada, cant_bc);
+
+  
+
+  int modificar;
+  printf("\nAcción a realizar? [Alta(1), Actualizar Nodo(2), Validación(3), Validación Conjunto (4), Nada(0)]\n");
+  scanf("%i", &modificar);
+
+  if(modificar == 1){
+    int nro_bc;
+    printf("\nNro de bc a modificar: ");
+    scanf("%i", &nro_bc);
+
+    arbol = alta(bc_federada, nro_bc, list_nodo, p[indicePrimo]);
+     
+  }
+  /*else if(modificar == 2){
+    actualizacionNodo();
+  }*/
+  else if(modificar == 3){
+    int nro_bc;
+    printf("\nNro de bc a validar: ");
+    scanf("%i", &nro_bc);
+
+    if(validacion(bc_federada, nro_bc, list_nodo, arbol) != 1){
+      printf("La blockchain es!!!\n");
+    }
+    else{
+      printf("La blockchain no es :(\n");
+    }
+  }
 
   free(p);
-  free(blockchain);
+  free(bc_federada);
   return 0;
 }
