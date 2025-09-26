@@ -56,8 +56,6 @@ int* crear_arbol(int* bc_federada, int cant_bc){
             }
         }
     }
-
-
     for(int i = 0; i <= nodos_totales; i++){ //muestra el arbol
       printf("%d\n", arbol[i]);
     }
@@ -65,11 +63,10 @@ int* crear_arbol(int* bc_federada, int cant_bc){
     return arbol;
 }
 
-//con el argumento "nodo" se refiere a que le pasa el primer nodo de la blockchain
-int* alta(int* bc_federada, int nro, DE_Nodo lista[], int primo){
+int* alta(int* bc_federada, int nro_de_bc, DE_Nodo lista[], int primo){
 
-    lista[nro] = agregar_nodo(lista[nro], primo);
-    bc_federada[nro] = lista[nro].ult->id;
+    lista[nro_de_bc] = agregar_nodo(lista[nro_de_bc], primo);
+    bc_federada[nro_de_bc] = lista[nro_de_bc].ult->id;
 
     int cant_bc = strlen(bc_federada);
 
@@ -77,17 +74,41 @@ int* alta(int* bc_federada, int nro, DE_Nodo lista[], int primo){
     
 }
 
-DE_Nodo* actualizacionNodo(DE_Nodo* blockchain, char msj){
+DE_Nodo* actualizacionNodo(DE_Nodo* lista_bcs, int id, int cant_bc, char msj, int* p, int ultPrimo){
 
+    Nodo* nuevo_nodo = malloc(sizeof(Nodo)); //chequear si podemos hacer de no hacer todo esto devuelta
+    
+    for(int i = 0; i < cant_bc; i++){
 
+        Nodo* aux = lista_bcs[i].ult;
+        int nodosPorActualizar = lista_bcs[cant_bc].cant_nodos;
 
-    return blockchain;
+        for(int j = 0; j < lista_bcs[cant_bc].cant_nodos; j++, aux = aux->ant){
+            if(aux->id == id){
+                nuevo_nodo = aux; 
+                nuevo_nodo->msj = msj;          
+                nuevo_nodo->id = p[ultPrimo];   
+                nuevo_nodo->ant = aux->ant;     
+                nuevo_nodo->sig = aux->sig;
+                nuevo_nodo->ant->sig = nuevo_nodo;
+                nuevo_nodo->sig->ant = nuevo_nodo;
+                for(int n = 0; n < nodosPorActualizar; i++, aux = aux->ant){
+                    aux->ant->id = p[ultPrimo++];
+                    ultPrimo+=1;
+                }
+                lista_bcs[i].prim = aux;
+            }
+            nodosPorActualizar-=1;
+        }
+    }
+
+    return lista_bcs;
 }
 
 
-int validacion(int* bc_federada, int indiceBc, DE_Nodo nodo[], int* arbol){
+int validacion(int* bc_federada, int indiceBc, DE_Nodo lista[], int* arbol){
 
-    Nodo* aux_nodo = nodo[indiceBc].ult;
+    Nodo* aux_nodo = lista[indiceBc].ult;
     int producto = 1;
 
     while(aux_nodo->sig != NULL){
@@ -99,7 +120,7 @@ int validacion(int* bc_federada, int indiceBc, DE_Nodo nodo[], int* arbol){
         }
     }
 
-    for(int i = 0; i < nodo[indiceBc].cant_nodos; i ++){
+    for(int i = 0; i < lista[indiceBc].cant_nodos; i ++){
         producto *= bc_federada[i];
     }
 

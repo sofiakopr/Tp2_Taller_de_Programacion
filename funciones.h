@@ -20,13 +20,13 @@ typedef struct Bloque_{
 
 DE_Nodo agregar_nodo(DE_Nodo lista, int primo); //agrego un nodo a una blockchain
 
-int* crear_arbol(int* Arrblockchain, int indicador); //crear arbol de blockchain //ver si es doble puntero x lista de blockchains
+int* crear_arbol(int* bc_federada, int cant_bc); //crear arbol de blockchain //ver si es doble puntero x lista de blockchains
 
-int* alta(int* bc_federada, int nro_de_bc ,DE_Nodo list_nodo[], int primo); //AGREGAR un nodo
+int* alta(int* bc_federada, int nro_de_bc ,DE_Nodo lista[], int primo); //AGREGAR un nodo
 
-DE_Nodo* actualizacionNodo(DE_Nodo* blockchain, char msj); //actualizar el contenido de un nodo y cambiar su id
+DE_Nodo* actualizacionNodo(DE_Nodo* blockchain, int id, int cant_bc, char msj, int* p, int ultPrimo); //actualizar el contenido de un nodo y cambiar su id
 
-int validacion(int* bc_federada, int nro, DE_Nodo nodo[], int* arbol); //validar formato de blockchain
+int validacion(int* bc_federada, int nro, DE_Nodo lista[], int* arbol); //validar formato de blockchain
 
 DE_Nodo* validacionConjunto(DE_Nodo* blockchain, int nroValidacion); //LA PRIMER BLOCKCHAIN DEL MUNDO!!!
 

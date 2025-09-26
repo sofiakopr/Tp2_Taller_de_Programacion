@@ -18,14 +18,14 @@ int main() {
   printf("\ncantidad de bc: ");
   scanf("%i", &cant_bc);
   
-  DE_Nodo list_nodo[cant_bc];
+  DE_Nodo list_nodo[cant_bc]; //cambiar nombre a "lista_bcs"? para q sea mas intuitivo?
   
   for(int i = 0; i < cant_bc; i ++){
     list_nodo[i].prim = NULL;
     list_nodo[i].ult = NULL;
   }
 
-  int indicePrimo = 0;
+  int ultPrimo = 0;
   int* bc_federada = malloc((sizeof(int)) * cant_bc); 
   
   for(int i = 0; i < cant_bc; i ++){
@@ -36,9 +36,9 @@ int main() {
     scanf("%i", &cant_nodos);
 
     for(int j = 0; j < cant_nodos; j ++){
-      list_nodo[i] = agregar_nodo(list_nodo[i], p[indicePrimo]);
+      list_nodo[i] = agregar_nodo(list_nodo[i], p[ultPrimo]);
       list_nodo[i].cant_nodos = cant_nodos;
-      indicePrimo += 1;
+      ultPrimo += 1;
     }
 
     bc_federada[i] = (list_nodo[i].ult)->id;
@@ -46,33 +46,35 @@ int main() {
 
   int* arbol = crear_arbol(bc_federada, cant_bc);
 
-  
-
   int modificar;
+  int nro_bc;
   printf("\nAcción a realizar? [Alta(1), Actualizar Nodo(2), Validación(3), Validación Conjunto (4), Nada(0)]\n");
   scanf("%i", &modificar);
 
   if(modificar == 1){
-    int nro_bc;
+    
     printf("\nNro de bc a modificar: ");
     scanf("%i", &nro_bc);
 
-    arbol = alta(bc_federada, nro_bc, list_nodo, p[indicePrimo]);
-     
+    arbol = alta(bc_federada, nro_bc, list_nodo, p[ultPrimo]);
   }
-  /*else if(modificar == 2){
-    actualizacionNodo();
-  }*/
+  else if(modificar == 2){
+    int id;
+    printf("\nId del nodo a actualizar: ");
+    scanf("%i", &id);
+
+    actualizacionNodo(list_nodo, id, cant_bc, 'd', p, ultPrimo);
+  }
   else if(modificar == 3){
-    int nro_bc;
+    
     printf("\nNro de bc a validar: ");
     scanf("%i", &nro_bc);
 
     if(validacion(bc_federada, nro_bc, list_nodo, arbol) != 1){
-      printf("La blockchain es!!!\n");
+      printf("La blockchain es valida!!!\n");
     }
     else{
-      printf("La blockchain no es :(\n");
+      printf("La blockchain no es valida :(\n");
     }
   }
 
