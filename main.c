@@ -3,7 +3,6 @@
 #include <math.h>
 #include "generador_primos.h"
 #include "funciones.h"
-#include <string.h>
 
 int main() {
   setbuf(stdout, NULL);
@@ -44,6 +43,7 @@ int main() {
     bc_federada[i] = (list_nodo[i].ult)->id;
   }
 
+  getchar();
   int* arbol = crear_arbol(bc_federada, cant_bc);
 
   int modificar;
@@ -59,11 +59,15 @@ int main() {
     arbol = alta(bc_federada, nro_bc, list_nodo, p[ultPrimo]);
   }
   else if(modificar == 2){
-    int id;
+    int id, nro_del_bc;
+
+    printf("\nNro de bc a modificar: ");
+    scanf("%i", &nro_bc);
+
     printf("\nId del nodo a actualizar: ");
     scanf("%i", &id);
 
-    actualizacionNodo(list_nodo, id, cant_bc, 'd', p, ultPrimo);
+    arbol = actualizacionNodo(bc_federada, list_nodo, id, cant_bc, nro_bc, p, ultPrimo);
   }
   else if(modificar == 3){
     
@@ -77,8 +81,25 @@ int main() {
       printf("La blockchain no es valida :(\n");
     }
   }
+  else if(modificar == 4){
+    int bc1, bc2;
 
+    printf("\nRango de bc a validar: ");
+    scanf("%i %i", &bc1, &bc2);
+
+    printf("\n%i %i", bc1, bc2);
+
+    if(validacionSubconjunto(list_nodo, bc_federada, cant_bc, bc1, bc2, arbol) != 1){
+      printf("\nSí pertenece :D");
+    }
+    else{
+      printf("\nNo pertenece... FUERA!!!");
+    }
+  }
+
+  destruir_bc(list_nodo->prim);    
   free(p);
+  free(arbol);
   free(bc_federada);
   return 0;
 }
